@@ -1,0 +1,241 @@
+<div class="pages-steps">
+  <ng-container *ngIf="pages < 11">
+    <span *ngFor="let page of [].constructor(pages); let i = index " [ngClass]="page_index == i+1?'active':''"
+          (click)="page_index = i + 1;  Reloadcases(false);">
+      {{  i + 1 }}
+    </span>
+  </ng-container>
+
+  <ng-container *ngIf="pages > 10">
+    <span [ngClass]="page_index == 1?'active':''" (click)="page_index = 1; Reloadcases(false);">1</span>
+    <span [ngClass]="page_index == 2?'active':''" (click)="page_index = 2; Reloadcases(false);">2</span>
+    <span [ngClass]="page_index == 3?'active':''" (click)="page_index = 3; Reloadcases(false);">3</span>
+    <span class="disabled">....</span>
+
+
+    <ng-container *ngIf="(pages%2 == 0)">
+      <ng-container *ngIf="(page_index<=3 || page_index>=pages - 2)">
+        <span (click)="page_index = (pages/2) - 1; Reloadcases(false);"
+              [ngClass]="page_index == (pages/2) - 1?'active':''">{{ (pages / 2) - 1 }}</span>
+        <span (click)="page_index = (pages/2); Reloadcases(false);"
+              [ngClass]="page_index == (pages/2)?'active':''">{{ (pages / 2)  }}</span>
+        <span (click)="page_index =(pages/2) + 1; Reloadcases(false);"
+              [ngClass]="page_index == (pages/2) + 1?'active':''">{{ (pages / 2) + 1  }}</span>
+      </ng-container>
+    </ng-container>
+
+
+    <ng-container *ngIf="(pages%2 != 0)">
+      <ng-container *ngIf="(page_index<=3 || page_index>=pages - 2)">
+        <span (click)="page_index = (pages/2) - 1; Reloadcases(false);"
+              [ngClass]="page_index == (pages/2) - 1?'active':''">{{ ((+pages+1) / 2) - 1 }}</span>
+        <span (click)="page_index = (pages/2); Reloadcases(false);"
+              [ngClass]="page_index == (pages/2)?'active':''">{{ ((+pages+1) / 2)  }}</span>
+        <span (click)="page_index =(pages/2) + 1; Reloadcases(false);"
+              [ngClass]="page_index == (pages/2) + 1?'active':''">{{ ((+pages+1) / 2) + 1  }}</span>
+      </ng-container>
+    </ng-container>
+
+
+      <ng-container *ngIf="!(page_index<=3 || page_index>=pages - 2)">
+        <span (click)="page_index = (+page_index)  - 1; Reloadcases(false);"
+              [ngClass]="page_index == (+page_index)  - 1?'active':''">{{ (+page_index) - 1 }}</span>
+        <span (click)="page_index = (+page_index); Reloadcases(false);"
+              [ngClass]="page_index == (+page_index)?'active':''">{{ (+page_index)  }}</span>
+        <span (click)="page_index = (+page_index)  + 1; Reloadcases(false);"
+              [ngClass]="page_index == (+page_index)  + 1?'active':''">{{ (+page_index) + 1 }}</span>
+      </ng-container>
+
+    <span class="disabled">....</span>
+
+    <span [ngClass]="page_index == pages - 2?'active':''"
+          (click)="page_index = pages - 2; Reloadcases(false);">{{ pages - 2 }}</span>
+    <span [ngClass]="page_index == pages - 1?'active':''"
+          (click)="page_index = pages - 1; Reloadcases(false);">{{ pages - 1 }}</span>
+    <span [ngClass]="page_index == pages?'active':''"
+          (click)="page_index = pages; Reloadcases(false);">{{ pages }}</span>
+
+  </ng-container>
+</div>
+
+<div class="pagination">
+  <button class="btn btn-default p-5 w-150 font-bold" (click)="page_popup=true">Filter</button>
+  <div class="clear-fix"></div>
+  <div class="float-left mb-5">
+    <label>Page Size:</label>
+    <input [(ngModel)]="page_size" (ngModelChange)="page_index=1;Reloadcases(false)" class="form-control"
+           placeholder="Page size">
+  </div>
+
+  <div class="float-right mb-5">
+    <label>Page Index:</label>
+    <select [(ngModel)]="page_index" (ngModelChange)="Reloadcases(false)" class="form-control">
+      <option *ngFor="let page of [].constructor(pages); let i = index " value="{{ i + 1 }}">{{ i + 1 }}</option>
+    </select>
+  </div>
+</div>
+
+<div class="masonry">
+  <div class="card mb-5 p-5 masonry-brick" *ngFor="let _case of cases">
+    <span class="box-icon">{{ _case.id_cas }}</span>
+    <h2 style="width: 80%">{{_case.cas_nom_dossier}} <br/>
+      <small>{{_case.cas_zone_nom}}</small>
+    </h2>
+    <p> {{_case.cas_resume_web}} </p>
+    <code>
+      Temoignages : {{_case.cas_temoignages_nb}}
+      <label *ngFor="let temionage of _case.temionages">
+        - <a href="javascript:void(0)" (click)="detailTemoin(temionage)"
+             class="card-link mat-tab-link mat-tab-links"> {{ temionage.tem_numSEPRA }} -  {{ temionage.cas_numEtude }}
+        -  {{ temionage.tem_nom_dossier }} </a>
+      </label>
+      <br/>
+      <br/>
+    </code>
+  </div>
+</div>
+
+
+<div [ngClass]="page_popup?'page_popup active':'page_popup'">
+  <div class="popup">
+    <label>Par mot clé du résumé :</label>
+    <input class="form-control" [(ngModel)]="filter.texte_resume">
+    <label>Par date :</label>
+    Du: <input type="date" class="form-control" [(ngModel)]="filter.date_debut">
+    au: <input type="date" class="form-control" [(ngModel)]="filter.date_fin">
+    <label>Par classe :</label>
+    <input type="radio" [(ngModel)]="filter.classe_cas" value="tous" checked="checked">&nbsp;Tous
+    <input type="radio" [(ngModel)]="filter.classe_cas" value="A">&nbsp;A
+    <input type="radio" [(ngModel)]="filter.classe_cas" value="B">&nbsp;B
+    <input type="radio" [(ngModel)]="filter.classe_cas" value="C">&nbsp;C
+    <input type="radio" [(ngModel)]="filter.classe_cas" value="D">&nbsp;D
+    <input type="radio" [(ngModel)]="filter.classe_cas" value="D1">&nbsp;D1 <!-- DM57 -->
+    <input type="radio" [(ngModel)]="filter.classe_cas" value="D2">&nbsp;D2 <!-- DM57 -->
+    <label>Par zone géographique :</label>
+    <select id="combo_region" [(ngModel)]="filter.zone" class="form-control float-left m-5"
+            style="width:150px;">
+      <option value=""> -- Toutes --</option>
+      <option value="0"> -- Aucune --</option>
+      <option value="national"> -- Cas Nationaux --</option>
+      <option value="Alsace">Alsace</option>
+      <option value="Aquitaine">Aquitaine</option>
+      <option value="Auvergne">Auvergne</option>
+      <option value="Basse Normandie">Basse Normandie</option>
+      <option value="Bourgogne">Bourgogne</option>
+      <option value="Bretagne">Bretagne</option>
+      <option value="Centre">Centre</option>
+      <option value="Champagne-Ardenne">Champagne-Ardenne</option>
+      <option value="Corse">Corse</option>
+      <option value="Franche-Comté">Franche-Comté</option>
+      <option value="Haute Normandie">Haute Normandie</option>
+      <option value="Ile-de-France">Ile-de-France</option>
+      <option value="Languedoc Roussillon">Languedoc Roussillon</option>
+      <option value="Limousin">Limousin</option>
+      <option value="Lorraine">Lorraine</option>
+      <option value="Midi Pyrénées">Midi Pyrénées</option>
+      <option value="Nord-pas-de-calais">Nord-Pas-de-Calais</option> <!-- DM 138 -->
+      <option value="Outre-Mer">Outre-Mer</option>
+      <option value="Pays de la Loire">Pays de la Loire</option>
+      <option value="Picardie">Picardie</option>
+      <option value="Poitou Charentes">Poitou Charentes</option>
+      <option value="Provence Alpes Cote d'azur">Provence Alpes Côte d'azur</option>
+      <option value="Rhône Alpes">Rhône Alpes</option>
+    </select>
+
+    <div class="float-left">
+
+      <img border="0" src="http://www.geipan.fr/fileadmin/france.gif" usemap="#frMap" class="foo">
+
+      <map name="frMap" id="france_map">
+        <area title="Alsace" shape="poly" class="addtt"
+              coords="140,40,142,43,143,48,141,49,141,61,146,71,149,67,150,49,156,43,139,40" alt="Alsace"
+              style="cursor:pointer;" (click)="AlertMap('Alsace')">
+
+        <area title="Aquitaine" shape="poly" class="addtt"
+              coords="59,114,65,109,65,106,69,102,74,103,76,106,78,113,81,115,72,131,59,133,58,138,62,141,58,155,37,142,48,103,58,113"
+              alt="Aquitaine" style="cursor:pointer;" (click)="AlertMap('Aquitaine')">
+
+        <area title="Auvergne" shape="poly" class="addtt"
+              coords="89,89,96,83,105,84,110,91,106,91,107,102,110,106,115,106,118,109,109,118,103,113,99,117,96,114,93,119,90,119,87,115,88,110,92,107,92,106,93,100,90,100,90,97,91,97,92,92,89,88"
+              alt="Auvergne" style="cursor:pointer;" (click)="AlertMap('Auvergne')">
+
+        <area title="Basse Normandie" shape="poly" class="addtt"
+              coords="70,58,71,51,64,46,64,40,49,37,48,32,41,31,48,55,57,55,63,56,64,54,70,60" alt="Basse Normandie"
+              style="cursor:pointer;" (click)="AlertMap('Basse Normandie')">
+
+        <area title="Bourgogne" shape="poly" class="addtt"
+              coords="100,54,95,56,97,60,95,67,97,83,106,84,110,91,114,92,117,89,120,90,120,85,125,86,125,78,123,77,125,75,125,72,124,66,119,65,115,59,110,62,106,62,100,54,96,56,96,56"
+              alt="Bourgogne" style="cursor:pointer;" (click)="AlertMap('Bourgogne')">
+
+        <area title="Bretagne" shape="poly" class="addtt"
+              coords="49,53,45,50,32,51,28,45,7,50,11,59,35,73,37,69,44,65,47,66,49,62,48,53" alt="Bretagne"
+              style="cursor:pointer;" (click)="AlertMap('Bretagne')">
+
+        <area title="Centre" shape="poly" class="addtt"
+              coords="79,50,84,58,89,58,90,60,97,61,95,68,97,83,89,90,77,91,72,87,73,84,70,82,66,82,63,78,64,71,70,66,71,58,72,52,79,50"
+              alt="Centre" style="cursor:pointer;" (click)="AlertMap('Centre')">
+
+        <area title="Champagne-Ardenne" shape="poly" class="addtt"
+              coords="109,27,113,28,116,23,119,32,117,34,117,44,114,46,126,56,128,61,124,66,119,66,115,60,112,60,110,62,105,62,100,55,100,49,102,38,106,36,105,33,109,28"
+              alt="Champagne" style="cursor:pointer;" (click)="AlertMap('Champagne-Ardenne')">
+
+        <area title="Corse" shape="poly" class="addtt" coords="155,138,147,148,148,160,153,165,156,160,158,151,155,138"
+              alt="Corse" style="cursor:pointer;" (click)="AlertMap('Corse')">
+
+        <area title="Franche-Comté" shape="poly" class="addtt"
+              coords="130,60,141,60,145,70,137,80,133,89,126,89,124,85,125,79,123,78,123,76,125,73,124,67,130,59"
+              alt="Franche-Comté" style="cursor:pointer;" (click)="AlertMap('Franche-Comté')">
+
+        <area title="Haute-Normandie" shape="poly" class="addtt"
+              coords="76,27,80,30,80,41,78,49,71,51,64,46,64,34,77,27" alt="Haute Normandie" style="cursor:pointer;"
+              (click)="AlertMap('Haute Normandie')"
+        >
+
+        <area title="Ile-de-France" shape="poly" class="addtt"
+              coords="80,42,78,49,84,57,89,57,90,60,96,61,95,56,99,55,100,48,94,41,92,41,90,44,80,42"
+              alt="Ile-de-France" style="cursor:pointer;" (click)="AlertMap('Ile-de-France')">
+        <area title="Languedoc-Roussillon" shape="poly" class="addtt"
+              coords="84,159,100,159,98,147,108,140,116,141,121,133,121,123,112,123,109,118,102,113,98,117,104,130,94,140,84,140,84,145,89,146,85,152,89,152,84,160"
+              alt="Languedoc" style="cursor:pointer;" (click)="AlertMap('Languedoc Roussillon')">
+        <area title="Limousin" shape="poly" class="addtt"
+              coords="76,90,89,89,92,92,92,98,90,98,90,101,93,101,92,107,88,110,87,115,78,113,77,107,74,104,69,103,73,99,70,92,77,91"
+              alt="Limousin" style="cursor:pointer;" (click)="AlertMap('Limousin')">
+
+        <area title="Lorraine" shape="poly" class="addtt"
+              coords="119,32,117,34,117,43,114,45,125,56,129,61,131,59,141,60,141,49,143,48,142,44,140,41,133,34,125,33,124,35,120,32"
+              alt="Lorraine" style="cursor:pointer;" (click)="AlertMap('Lorraine')">
+        <area title="Midi Pyrénées" shape="poly" class="addtt"
+              coords="58,155,62,140,58,137,59,133,72,131,81,115,86,114,90,120,93,120,97,114,104,130,95,140,84,140,84,146,89,147,85,152,90,153,84,160,68,151,68,153,58,154"
+              alt="Midi Pyrénées" style="cursor:pointer;" (click)="AlertMap('Midi Pyrénées')">
+        <area title="Nord-Pas-de-Calais" shape="poly" class="addtt"
+              coords="91,7,80,13,80,24,87,24,91,27,102,26,108,27,108,22,98,18,98,14,94,15,92,13,91,7"
+              alt="Nord-Pas-De-Calais" style="cursor:pointer;" (click)="AlertMap('Nord-pas-de-calais')">
+        <area title="Pays de la loire" shape="poly" class="addtt"
+              coords="47,55,57,55,63,56,64,54,70,60,70,65,64,70,62,78,51,82,54,85,54,92,44,92,34,77,37,69,44,66,46,68,49,63,48,54"
+              alt="Pays de la Loire" style="cursor:pointer;" (click)="AlertMap('Pays de la Loire')">
+        <area title="Picardie" shape="poly" class="addtt"
+              coords="80,24,87,24,91,27,102,26,109,28,105,34,106,37,102,39,100,49,95,42,92,42,91,44,80,42,80,30,77,27,79,24"
+              alt="Picardie" style="cursor:pointer;" (click)="AlertMap('Picardie')">
+
+        <area title="Poitou-Charentes" shape="poly" class="addtt"
+              coords="54,91,53,84,50,81,62,77,66,82,70,82,72,83,71,87,77,91,70,93,73,99,65,107,65,110,59,114,45,100,44,94,48,96,51,92,54,91"
+              alt="Poitou-Charentes" style="cursor:pointer;" (click)="AlertMap('Poitou Charentes')">
+        <area title="Provence-Alpes-Côte d'Azur" shape="poly" class="addtt"
+              coords="135,108,141,107,143,108,147,118,145,122,154,126,153,134,137,148,115,141,120,133,121,123,124,120,129,126,133,122,129,118,137,111,135,108"
+              alt="Provence Alpes Côte d'Azur" style="cursor:pointer;"
+              (click)="AlertMap('Provence Alpes Cote d\'azur')">
+        <area title="Rhônes-Alpes" shape="poly" class="addtt"
+              coords="123,84,126,89,141,88,147,106,143,109,141,107,135,108,137,112,129,119,133,123,129,126,125,121,121,123,112,122,109,118,117,109,114,106,110,106,106,101,106,91,110,91,114,92,117,89,120,90,120,85,124,86"
+              alt="Rhône Alpes" style="cursor:pointer;" (click)="AlertMap('Rhône Alpes')">
+
+        <area title="Outre-Mer" shape="rect" class="addtt" coords="0,87,22,168" alt="Outre-Mer" style="cursor:pointer;"
+              (click)="AlertMap('Outre-Mer')">
+      </map>
+    </div>
+
+    <div class="clear-fix mb-5"></div>
+    <button class="btn btn-default p-5 w-150 font-bold m-5" (click)="page_popup=false; Reloadcases()">OK</button>
+    <button class="btn btn-default p-5 w-150 font-bold m-5" (click)="ReloadFilter()">Clear</button>
+    <button class="btn btn-default p-5 w-150 font-bold m-5" (click)="page_popup=false">Cancel</button>
+  </div>
+</div>

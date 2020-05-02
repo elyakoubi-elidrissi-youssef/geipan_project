@@ -1,0 +1,596 @@
+span.box-icon {
+  background: #1976d2;
+  color: white;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 3;
+  width: 60px;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.float-left {
+  float: left;
+}
+
+
+.float-right {
+  float: right;
+}
+
+.p-5 {
+  padding: 5px;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.w-250 {
+  width: 250px;
+}
+
+
+.w-150 {
+  width: 150px;
+}
+
+
+.font-bold {
+  font-weight: bold;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.pagination {
+  line-height: 25.5px;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  position: sticky;
+  background: white;
+  width: 100%;
+  top: 0;
+  margin-left: -9px;
+  padding: 0 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 10;
+  box-shadow: 0px 0px 2px 0.3px #0000006b;
+  border-radius: 0px 0px 5px 5px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+.form-control {
+  padding: 5px 10px;
+  border: 1px dashed #AAA;
+  border-radius: 2px;
+  outline: none;
+}
+
+.pages-steps {
+  position: fixed;
+  right: 10px;
+  top: 325px;
+  text-align: center;
+}
+
+.pages-steps span {
+  display: block;
+  padding: 3px;
+  margin: 5px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 2px 0.3px #0000006b;
+  font-size: 14px;
+  font-weight: bold;
+  background: #1976d2;
+  color: #FFF;
+  user-select: none;
+  cursor: pointer;
+  min-width: 35px;
+
+}
+
+
+.pages-steps span.active {
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.pages-steps span.disabled {
+  background: #fafafa;
+  color: #111;
+}
+.m-5{
+  margin: 5px;
+}
+.page_popup
+{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #00000014;
+  top: 0;
+  z-index: 999;
+  left: -9999px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  display: flex;
+  transition: all .5s ease;
+}
+
+
+.page_popup.active
+{
+  left: 0;
+  transition: all .5s ease;
+}
+
+.page_popup .popup
+{
+  width: 100%;
+  max-width: 650px;
+  transition: all .5s ease;
+  height: 500px;
+  background: #FFF;
+  margin: 0 15px;
+  box-shadow: 0px 0px 2px 0.3px #0000006b;
+  z-index: 999;
+  padding: 15px;
+
+}
+
+/* general */
+
+//== Components
+//
+//## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
+
+$padding-base-vertical: 6px !default;
+$padding-base-horizontal: 12px !default;
+
+$padding-large-vertical: 10px !default;
+$padding-large-horizontal: 16px !default;
+
+$padding-small-vertical: 5px !default;
+$padding-small-horizontal: 10px !default;
+
+$padding-xs-vertical: 1px !default;
+$padding-xs-horizontal: 5px !default;
+
+$font-size-base: 14px !default;
+$font-size-large: ceil(($font-size-base * 1.25)) !default; // ~18px
+$font-size-small: ceil(($font-size-base * .85)) !default; // ~12px
+
+$font-size-h1: floor(($font-size-base * 2.6)) !default; // ~36px
+$font-size-h2: floor(($font-size-base * 2.15)) !default; // ~30px
+$font-size-h3: ceil(($font-size-base * 1.7)) !default; // ~24px
+$font-size-h4: ceil(($font-size-base * 1.25)) !default; // ~18px
+$font-size-h5: $font-size-base !default;
+$font-size-h6: ceil(($font-size-base * .85)) !default; // ~12px
+
+//** Unit-less `line-height` for use in components like buttons.
+$line-height-base: 1.428571429 !default; // 20/14
+//** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+$line-height-computed: floor(($font-size-base * $line-height-base)) !default; // ~20px
+
+$gray-base: #000 !default;
+$gray-darker: lighten($gray-base, 13.5%) !default; // #222
+$gray-dark: lighten($gray-base, 20%) !default; // #333
+$gray: lighten($gray-base, 33.5%) !default; // #555
+$gray-light: lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter: lighten($gray-base, 93.5%) !default; // #eee
+
+$border-radius-base: 4px !default;
+$border-radius-large: 6px !default;
+$border-radius-small: 3px !default;
+
+$brand-primary: darken(#428bca, 6.5%) !default; // #337ab7
+$brand-success: #5cb85c !default;
+$brand-info: #5bc0de !default;
+$brand-warning: #f0ad4e !default;
+$brand-danger: #d9534f !default;
+
+
+/* card  */
+$card-spacer-x: 1.25rem;
+$card-spacer-y: .75rem;
+$card-border-width: .0625rem;
+$card-border-color: #e5e5e5;
+
+$card-cap-bg: #f5f5f5;
+
+.card {
+  margin: 5px;
+  position: relative;
+  margin-bottom: $card-spacer-y;
+  border: $card-border-width solid $card-border-color;
+  vertical-align: top;
+}
+
+.card-block {
+  padding: $card-spacer-x;
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: $card-spacer-y;
+}
+
+.card-subtitle {
+  margin-top: -($card-spacer-y / 2);
+  margin-bottom: 0;
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+// .card-actions {
+//   padding: $card-spacer-y $card-spacer-x;
+
+//   .card-link + .card-link {
+//     margin-left: $card-spacer-x;
+//   }
+// }
+
+.card-link {
+  &:hover {
+    text-decoration: none;
+  }
+
+  + .card-link {
+    margin-left: $card-spacer-x;
+  }
+}
+
+
+//
+// Optional textual caps
+//
+
+.card-header {
+  padding: $card-spacer-y $card-spacer-x;
+  background-color: $card-cap-bg;
+  border-bottom: $card-border-width solid $card-border-color;
+
+}
+
+.card-footer {
+  padding: $card-spacer-y $card-spacer-x;
+  background-color: $card-cap-bg;
+  border-top: $card-border-width solid $card-border-color;
+}
+
+
+//
+// Background variations
+//
+
+.card-primary {
+  background-color: $brand-primary;
+  border-color: $brand-primary;
+}
+
+.card-success {
+  background-color: $brand-success;
+  border-color: $brand-success;
+}
+
+.card-info {
+  background-color: $brand-info;
+  border-color: $brand-info;
+}
+
+.card-warning {
+  background-color: $brand-warning;
+  border-color: $brand-warning;
+}
+
+.card-danger {
+  background-color: $brand-danger;
+  border-color: $brand-danger;
+}
+
+
+//
+// Inverse text within a card for use with dark backgrounds
+//
+
+.card-inverse {
+  .card-header,
+  .card-footer {
+    border-bottom: .075rem solid rgba(255, 255, 255, .2);
+  }
+
+  .card-header,
+  .card-footer,
+  .card-title,
+  .card-blockquote {
+    color: #fff;
+  }
+
+  .card-link,
+  .card-text,
+  .card-blockquote > footer {
+    color: rgba(255, 255, 255, .65);
+  }
+
+  // .card-link {
+  //   @include hover-focus {
+  //     color: #fff;
+  //   }
+  // }
+}
+
+.clear-fix
+{
+  clear: both;
+}
+
+//
+// Blockquote
+//
+
+.card-blockquote {
+  padding: 0;
+  margin-bottom: 0;
+  border-left: 0;
+}
+
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1.25rem;
+}
+
+
+//
+// Card set
+//
+
+
+.card-deck {
+  display: table;
+  table-layout: fixed;
+  border-spacing: 1.25rem 0;
+
+  .card {
+    display: table-cell;
+    width: 1%;
+    vertical-align: top;
+  }
+}
+
+.card-deck-wrapper {
+  margin-right: -1.25rem;
+  margin-left: -1.25rem;
+}
+
+
+//
+// Card groups
+//
+
+.card-group {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+
+
+  .card {
+    display: table-cell;
+    vertical-align: top;
+
+    + .card {
+      margin-left: 0;
+      border-left: 0;
+    }
+  }
+}
+
+
+//
+// Card
+//
+
+.card-columns {
+  column-count: 3;
+  column-gap: 1.25rem;
+
+  .card {
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .card-columns {
+    column-count: 2 !important;
+  }
+
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 767px) {
+
+  .card-columns {
+    column-count: 1 !important;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .card-columns {
+    column-count: 1 !important;
+  }
+}
+
+
+//
+// Buttons
+// --------------------------------------------------
+
+$btn-font-weight: normal !default;
+
+$btn-default-color: #333 !default;
+$btn-default-bg: #fff !default;
+$btn-default-border: #ccc !default;
+
+$btn-primary-color: #fff !default;
+$btn-primary-bg: $brand-primary !default;
+$btn-primary-border: darken($btn-primary-bg, 5%) !default;
+
+$btn-success-color: #fff !default;
+$btn-success-bg: $brand-success !default;
+$btn-success-border: darken($btn-success-bg, 5%) !default;
+
+$btn-info-color: #fff !default;
+$btn-info-bg: $brand-info !default;
+$btn-info-border: darken($btn-info-bg, 5%) !default;
+
+$btn-warning-color: #fff !default;
+$btn-warning-bg: $brand-warning !default;
+$btn-warning-border: darken($btn-warning-bg, 5%) !default;
+
+$btn-danger-color: #fff !default;
+$btn-danger-bg: $brand-danger !default;
+$btn-danger-border: darken($btn-danger-bg, 5%) !default;
+
+$btn-link-disabled-color: $gray-light !default;
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius-base: $border-radius-base !default;
+$btn-border-radius-large: $border-radius-large !default;
+$btn-border-radius-small: $border-radius-small !default;
+
+
+// Base styles
+// --------------------------------------------------
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  margin-top: 5px;
+  /* margin-bottom: -25px; */
+  box-shadow: 0px 0px 2px 0.3px #0000006b;
+  font-size: larger;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  &,
+  &:active,
+  &.active {
+    &:focus,
+    &.focus {
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &.focus {
+    color: $btn-default-color;
+    text-decoration: none;
+  }
+
+  &:active,
+  &.active {
+    background-image: none;
+    outline: 0;
+  }
+
+
+  // [converter] extracted a& to a.btn
+}
+
+a.btn {
+  &.disabled,
+  fieldset[disabled] & {
+    pointer-events: none; // Future-proof disabling of clicks on `<a>` elements
+  }
+}
+
+
+// Alternate buttons
+// --------------------------------------------------
+
+
+// Link buttons
+// -------------------------
+
+
+// Button Sizes
+// --------------------------------------------------
+
+
+// Block button
+// --------------------------------------------------
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+// Vertically space out multiple block buttons
+.btn-block + .btn-block {
+  margin-top: 5px;
+}
+
+// Specificity overrides
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  &.btn-block {
+    width: 100%;
+  }
+}
+
+
+/* ------------ */
+
+
+.masonry {
+  display: flex;
+  flex-flow: row wrap;
+  margin-left: -8px; /* Adjustment for the gutter */
+}
+
+.masonry-brick {
+  flex: auto;
+  min-width: 150px;
+  margin: 0 8px 8px 0; /* Some gutter */
+}
+
+.masonry-brick {
+  &:nth-child(4n+1) {
+    width: 400px;
+  }
+
+  &:nth-child(4n+2) {
+    width: 450px;
+  }
+
+  &:nth-child(4n+3) {
+    width: 500px;
+  }
+
+  &:nth-child(4n+4) {
+    width: 550px;
+  }
+}
