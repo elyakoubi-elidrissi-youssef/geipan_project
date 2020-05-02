@@ -25,7 +25,7 @@
     "cors": "^2.8.5",
     "encoding": "^0.1.12",
     "iconv": "^2.3.5",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "maphilight": "^1.4.0",
     "ng-maphilight": "^1.0.1",
     "rxjs": "~6.5.4",
